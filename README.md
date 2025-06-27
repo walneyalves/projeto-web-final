@@ -1,16 +1,15 @@
-# movie_app
+# 🎬 MovieApp Web
 
-A new Flutter project.
+Versão web do app mobile criado no desafio com o Prof. Vito. O app busca filmes usando a API OMDb e exibe os resultados com pôster e link para trailer.
 
-## Getting Started
+## 🚀 Tecnologias
+- HTML
+- CSS
+- JavaScript
+- API OMDb
 
-This project is a starting point for a Flutter application.
+## 🌍 Demonstração
+(Após publicar no GitHub Pages, insira o link aqui)
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 📄 Desenvolvedor
+Walney Alves
