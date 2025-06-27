@@ -1,44 +1,42 @@
-// Função chamada ao clicar no botão "Buscar"
-function buscarFilmes() {
-  const query = document.getElementById("searchInput").value;
+const API_KEY = "3dc71ba23b0e786b1a1852d94b01d544";
+const BASE_URL = "https://api.themoviedb.org/3";
+const IMG_URL = "https://image.tmdb.org/t/p/w500";
+const LANGUAGE = "pt-BR";
 
-  // URL da API OMDb (lembre-se de usar sua própria API KEY)
-  const url = `https://www.omdbapi.com/?apikey=SEU_TOKEN&s=${query}`;
+const filmesContainer = document.getElementById("filmes");
 
-  // Faz a requisição à API
-  fetch(url)
-    .then(resposta => resposta.json())
-    .then(dados => {
-      if (dados.Response === "True") {
-        mostrarFilmes(dados.Search); // Exibe os filmes
-      } else {
-        alert("Nenhum filme encontrado.");
-      }
+function buscarFilmesPopulares() {
+  fetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}&language=${LANGUAGE}&page=1`)
+    .then(response => response.json())
+    .then(data => {
+      mostrarFilmes(data.results);
     })
-    .catch(erro => {
-      console.error("Erro ao buscar filmes:", erro);
+    .catch(error => {
+      console.error("Erro ao buscar filmes:", error);
+      filmesContainer.innerHTML = "<p>Erro ao carregar os filmes. Tente novamente mais tarde.</p>";
     });
 }
 
-// Função para exibir os filmes retornados
-function mostrarFilmes(lista) {
-  const container = document.getElementById("filmeContainer");
-  container.innerHTML = ""; // Limpa a tela antes de exibir novos resultados
+function mostrarFilmes(filmes) {
+  filmesContainer.innerHTML = "";
 
-  lista.forEach(filme => {
+  filmes.forEach(filme => {
     const div = document.createElement("div");
-    div.className = "card";
+    div.classList.add("card");
 
-    // Link dinâmico de busca do trailer no Google
-    const linkTrailer = `https://www.google.com/search?q=${encodeURIComponent(filme.Title + " trailer")}`;
+    const imagem = filme.poster_path
+      ? `${IMG_URL}${filme.poster_path}`
+      : "https://via.placeholder.com/200x300?text=Sem+Imagem";
 
-    // Monta o conteúdo do card
     div.innerHTML = `
-      <img src="${filme.Poster}" alt="${filme.Title}">
-      <h3>${filme.Title}</h3>
-      <a href="${linkTrailer}" target="_blank">🎬 Ver trailer</a>
+      <img src="${imagem}" alt="${filme.title}">
+      <h3>${filme.title}</h3>
+      <p>⭐ ${filme.vote_average}</p>
     `;
 
-    container.appendChild(div); // Adiciona o card ao container
+    filmesContainer.appendChild(div);
   });
 }
+
+// Iniciar busca
+buscarFilmesPopulares();
